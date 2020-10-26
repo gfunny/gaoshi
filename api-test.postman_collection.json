@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "02c5df8d-9838-4ef9-9699-2ee48532f525",
-		"name": "接口测试",
+		"name": "api-test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -16,17 +16,9 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"// pm.test(\"Body is correct\", function () {\r",
-							"//     pm.response.to.have.body(\"职位频道\");\r",
-							"// });\r",
-							"\r",
-							"// pm.test(\"Your test name\", function () {\r",
-							"//     var jsonData = pm.response.json();\r",
-							"//     pm.expect(jsonData.value).to.eql(100);\r",
-							"// });\r",
 							"\r",
 							"pm.test(\"Body matches string\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"succeeded\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
 							"});\r",
 							""
 						],
@@ -63,7 +55,7 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Body matches string\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"succeeded\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -349,7 +341,7 @@
 						"id": "cec42b15-aaba-415f-bd8f-621b6e594623",
 						"exec": [
 							"\r",
-							"pm.environment.set(\"keyword\", \"大\");\r",
+							"pm.environment.set(\"keyword\", \"运营\");\r",
 							"\r",
 							"// pm.environment.set(\"keyword\", data.name);\r",
 							"// console.log(data.name);\r",
@@ -373,17 +365,13 @@
 							"});\r",
 							"\r",
 							"pm.test(\"Body matches string\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"succeeded\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"将返回值的realname设置为环境变量\" , function(){\r",
-							"    var data = JSON.parse(responseBody);// 把responseBody转为json字符串 \r",
-							"    pm.environment.set(\"name\", data.data[0].realName); //将返回数据中第一个数组的realname值设为环境变量 ，给下一个接口引用 \r",
-							"}); \r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
+							"// pm.test(\"将返回值的realname设置为环境变量\", function(){\r",
+							"//     var data = JSON.parse(responseBody);\r",
+							"//     pm.environment.set(\"name\", data.data[0].realName);\r",
+							"// }); \r",
 							"\r",
 							""
 						],
@@ -391,6 +379,9 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disableUrlEncoding": false
+			},
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -398,7 +389,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/User/SearchUser?keyword={{keyword}}&searchScope=3",
+					"raw": "{{url}}/User/SearchUser?keyword={{keyword}}&searchScope=10",
 					"host": [
 						"{{url}}"
 					],
@@ -413,7 +404,7 @@
 						},
 						{
 							"key": "searchScope",
-							"value": "3"
+							"value": "10"
 						}
 					]
 				}
@@ -566,20 +557,23 @@
 			"name": "社区-搜索名字、昵称（pro） -step2",
 			"event": [
 				{
-					"listen": "prerequest",
+					"listen": "test",
 					"script": {
-						"id": "5f1d57c7-f0d3-4e0c-954c-f5d99e636e26",
+						"id": "dcb2be2d-2d75-4f2c-aaa6-34c21aeb686f",
 						"exec": [
-							"// pm.globals.set(\"keyword\", \"八爪鱼\");\r",
-							"pm.environment.set(\"keyword\", \"鱼\");\r",
-							"// pm.variables.get(\"variable_key\");\r",
 							"\r",
-							"// pm.environment.set(\"keyword\", data.name);\r",
-							"// console.log(data.name);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var na=pm.environment.get(\"name\");\r",
+							"console.log(\"搜索关键字为：\"+na);\r",
 							"\r",
 							"\r",
-							"// postman.setEnvironmentVariable(\"keyword\", (\"0000\" + (Math.random()*Math.pow(36,4) << 0).toString(36)).slice(-4));\r",
-							"\r",
+							"pm.test(\"返回匹配项\", function () {\r",
+							"    // var data = pm.response.json\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});\r",
 							"\r",
 							""
 						],
@@ -587,41 +581,29 @@
 					}
 				},
 				{
-					"listen": "test",
+					"listen": "prerequest",
 					"script": {
-						"id": "873f4108-e968-40fd-8746-170c259d46e2",
+						"id": "46374b35-fd77-4837-88a8-5f72f0a0cef6",
 						"exec": [
-							"var data = JSON.parse(responseBody);\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
 							"\r",
-							"pm.test(\"Body matches string\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"succeeded\");\r",
-							"    \r",
-							"});\r",
+							"// pm.environment.set(\"keyword\", \"测试\");\r",
+							"// pm.environment.get(\"name\");\r",
+							"// pm.variables.get(\"variable_key\");\r",
+							"\r",
+							"pm.environment.set(\"keyword\", data.name);\r",
+							"console.log(data.name);\r",
 							"\r",
 							"\r",
-							"console.log(pm.info.iteration)\r",
-							"\r",
-							"// 在console 打印出相关返回值字段\r",
-							"var na=pm.environment.get(\"name\");\r",
-							"console.log(\"搜索结果为：\"+na);\r",
-							"\r",
-							"\r",
-							"\r",
-							"\r",
-							"// var data = JSON.parse(responseBody);// 把responseBody转为json字符串\r",
-							"\r",
-							"\r",
-							"// // postman.setEnvironmentVariable(\"token\", data.Token);//把返回参数中的keys设置为环境变量\r",
-							"\r",
-							"// pm.environment.set(\"name\", data.data[0].realName);"
+							""
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"followRedirects": true,
+				"disableUrlEncoding": false
+			},
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -799,19 +781,23 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cfc76e5d-c391-4e3a-b1f2-b7d209080285",
+						"id": "1ab38efe-b234-42b3-a3f6-9e82f2d8abce",
 						"exec": [
 							"\r",
+							"// var jsonData = JSON.parse(responseBody);\r",
 							"\r",
-							"var jsonData = JSON.parse(responseBody);\r",
+							"// tests['check response total value 判断总数是否为某值'] = jsonData.data.total ===684;\r",
 							"\r",
-							"tests['check response total value'] = jsonData.data.total ===669;\r",
+							"// pm.test('判断data中canGrabCount数据为341' , function(){   \r",
+							"//   var jsonData = pm.response.json();\r",
+							"//   pm.expect(jsonData.data.canGrabCount).to.eql(341);\r",
+							"// });\r",
 							"\r",
-							"pm.test('判断data中canGrabCount数据为341' , function(){\r",
-							"  var jsonData = pm.response.json();\r",
-							"  pm.expect(jsonData.data.canGrabCount).to.eql(341);});\r",
 							"\r",
-							""
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
